@@ -10,7 +10,7 @@ const seasons_1 = __importDefault(require("./seasons"));
 const series_1 = __importDefault(require("./series"));
 exports.default = `
     type Query {
-        get_cover(order: Int!, type: [Int!], limit: Int!): [cover_object]
+        get_cover(type: [Int!], limit: Int!): [cover_object]
         get_series(id: ID!): Serie
         get_language(id: ID!): Language
         get_season(id: ID!): Seasons

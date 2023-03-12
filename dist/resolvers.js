@@ -21,26 +21,32 @@ const USERS_1 = __importDefault(require("./models/USERS"));
 const jsonwebtoken_config_1 = __importDefault(require("./libs/jsonwebtoken_config"));
 exports.default = {
     Query: {
-        get_cover(root, { order, type, limit }) {
+        get_cover(root, { type, limit }) {
             return __awaiter(this, void 0, void 0, function* () {
-                const sort = [{ dateMs: -1 }, { views: -1 }, { seasons: -1 }];
-                const find = [{}, { gender: 'shonen' }, { gender: 'seinen' }, { languages: 'español' }];
-                if (type.length == 1) {
-                    let _value = find[type[0]];
-                    if (type[0] == 0) {
-                        _value = { _value: Object.keys(sort[order]) };
+                const types = [
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ dateMs: -1 }).limit(limit); });
+                    },
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ views: -1 }).limit(limit); });
+                    },
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ seasons: -1 }).limit(limit); });
+                    },
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ gender: 'shonen' }).sort({ views: -1 }).limit(limit); });
+                    },
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ gender: 'seinen' }).sort({ views: -1 }).limit(limit); });
+                    },
+                    function () {
+                        return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ languages: 'español' }).sort({ views: -1 }).limit(limit); });
                     }
-                    ;
-                    return { section: yield SERIE_COVER_1.default.find(find[type[0]]).sort(sort[order]).limit(limit), name: Object.values(_value).toString() };
-                }
+                ];
+                const names = ['popular', 'nuevo', 'shonen', 'seinen', 'dobladas', 'largas'];
                 const covers = [];
                 for (let x = 0; x < type.length; x++) {
-                    let _value = find[type[x]];
-                    if (type[x] == 0) {
-                        _value = { _value: Object.keys(sort[order]) };
-                    }
-                    ;
-                    covers.push({ section: yield SERIE_COVER_1.default.find(find[type[x]]).sort(sort[order]).limit(limit), name: Object.values(_value).toString() });
+                    covers.push({ section: types[type[x]], name: names[type[x]] });
                 }
                 return covers;
             });
