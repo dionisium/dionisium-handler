@@ -6,7 +6,7 @@ import series from "./series";
 
 export default  `
     type Query {
-        get_cover(order: Int!, type: [Int!], limit: Int!): [cover_object]
+        get_cover(type: [Int!], limit: Int!): [cover_object]
         get_series(id: ID!): Serie
         get_language(id: ID!): Language
         get_season(id: ID!): Seasons

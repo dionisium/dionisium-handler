@@ -8,19 +8,19 @@ import jwt_libs from "./libs/jsonwebtoken_config";
 
 export default {
     Query:{
-        async get_cover(root, {order, type, limit}){
-            const sort:any = [{dateMs:-1}, {views:-1}, {seasons:-1}];
-            const find:any = [{},{gender:'shonen'}, {gender:'seinen'}, {languages:'español'}];
-            if(type.length == 1){
-                let _value:object = find[type[0]];
-                if(type[0] == 0){_value = {_value:Object.keys(sort[order])}};
-                return {section:await serie_cover_model.find(find[type[0]]).sort(sort[order]).limit(limit), name:Object.values(_value).toString()};
-            }
+        async get_cover(root, {type, limit}){
+            const types:Array<Function> = [
+                async function(){return await serie_cover_model.find().sort({dateMs:-1}).limit(limit);},
+                async function(){return await serie_cover_model.find().sort({views:-1}).limit(limit);},
+                async function(){return await serie_cover_model.find().sort({seasons:-1}).limit(limit);},
+                async function(){return await serie_cover_model.find({gender:'shonen'}).sort({views:-1}).limit(limit);},
+                async function(){return await serie_cover_model.find({gender:'seinen'}).sort({views:-1}).limit(limit);},
+                async function(){return await serie_cover_model.find({languages:'español'}).sort({views:-1}).limit(limit);}
+            ];
+            const names:Array<string> = ['popular', 'nuevo', 'shonen', 'seinen', 'dobladas', 'largas'];
             const covers:Array<object> = [];
             for (let x = 0; x < type.length; x++) {
-                let _value:object = find[type[x]];
-                if(type[x] == 0){_value = {_value:Object.keys(sort[order])}};
-                covers.push({section:await serie_cover_model.find(find[type[x]]).sort(sort[order]).limit(limit), name:Object.values(_value).toString()});
+                covers.push({section:types[type[x]], name:names[type[x]]});
             }
             return covers;
         },
