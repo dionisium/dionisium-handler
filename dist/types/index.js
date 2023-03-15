@@ -8,15 +8,16 @@ const cover_1 = __importDefault(require("./cover"));
 const language_1 = __importDefault(require("./language"));
 const seasons_1 = __importDefault(require("./seasons"));
 const series_1 = __importDefault(require("./series"));
+// QUERY
 exports.default = `
     type Query {
         get_cover(type: [Int!], limit: Int!): [cover_object]
-        get_series(id: ID!): Serie
-        get_language(id: ID!): Language
-        get_season(id: ID!): Seasons
-        get_chapter(id: ID!): Chapters
+        get_series(id: String!): Serie
+        get_language(id: String!): Language
+        get_season(id: String!): Seasons
+        get_chapter(id: String!): Chapters
         search(series: Int!, chapters: Int!, search: String!): Search
-        get_viewing(token: ID!): [Viewing]
+        get_viewing(token: String!): [Viewing]
     }
     type Search {
         serie: [Serie]
