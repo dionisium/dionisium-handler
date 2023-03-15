@@ -6,7 +6,7 @@ exports.default = `
         name: String
         description: String
         thumnail: String
-        languages: [language_serie]
+        lenguages: [language_serie]
         date: String
         dateMs: Float
         views: Int
