@@ -5,10 +5,16 @@ import season_model from "./models/SEASON";
 import chapter_model from "./models/CHAPTER";
 import user_model from "./models/USERS";
 import jwt_libs from "./libs/jsonwebtoken_config";
+import { redis } from "./redis";
 
 export default {
     Query:{
         async get_cover(root, {type, limit}){
+            const res = await redis.get('covers');
+            if(res != null){
+                return JSON.parse(res);
+            }
+
             const types:Array<Function> = [
                 async function(){return await serie_cover_model.find().sort({dateMs:-1}).limit(limit);},
                 async function(){return await serie_cover_model.find().sort({views:-1}).limit(limit);},
@@ -20,8 +26,9 @@ export default {
             const names:Array<string> = ['popular', 'nuevo', 'shonen', 'seinen', 'dobladas', 'largas'];
             const covers:Array<object> = [];
             for (let x = 0; x < type.length; x++) {
-                covers.push({section:types[type[x]], name:names[type[x]]});
+                covers.push({section:await types[type[x]](), name:names[type[x]]});
             }
+            redis.set('covers', JSON.stringify(covers));
             return covers;
         },
 
@@ -55,7 +62,7 @@ export default {
         async get_viewing(root, {token}){
             const decoded = await jwt_libs.decoded(token);
             if(decoded == 'error unexpected'){return []}
-            const userFound = await user_model.findById(decoded._id);
+            const userFound = await user_model.findById(decoded?.["_id"]);
             return userFound.viewing.slice(0, 3);
         }
     },

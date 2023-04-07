@@ -6,26 +6,27 @@ if(PROD == false){
 }
 
 // IMPORTS
-import morgan from 'morgan';
-import cors from 'cors';
+import fastify from 'fastify';
+import cors from '@fastify/cors';
 import MOD from 'method-override';
-import express from 'express';
-const app = express();
-require('./database');
-
-// MIDLEWARES
-app.use(MOD('_method'));
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
-app.use(cors());
-app.use(morgan('tiny'));
-
-// GRAPHQL SERVER
 import graphql_server from './server';
-app.use(express.Router().use(graphql_server()));
 
-// SERVER
-app.set('port', process.env.PORT || 3400);
-app.listen(app.get('port'), ()=>{
-    console.log('server on port:' + app.get('port'));
-});
+async function start():Promise<void>{
+    const app = fastify({logger:true});
+    await app.register(cors);
+
+    // DATABASE
+    require('./database');
+    require('./redis');
+    
+    // GRAPHQL SERVER
+    app.setDefaultRoute(graphql_server());
+
+    // SERVER
+    const PORT = process.env.PORT || 4560;
+    app.listen(PORT, ()=>{
+        console.log('server on port:' + PORT);
+    });
+}
+
+start();
