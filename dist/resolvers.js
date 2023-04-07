@@ -19,10 +19,15 @@ const SEASON_1 = __importDefault(require("./models/SEASON"));
 const CHAPTER_1 = __importDefault(require("./models/CHAPTER"));
 const USERS_1 = __importDefault(require("./models/USERS"));
 const jsonwebtoken_config_1 = __importDefault(require("./libs/jsonwebtoken_config"));
+const redis_1 = require("./redis");
 exports.default = {
     Query: {
         get_cover(root, { type, limit }) {
             return __awaiter(this, void 0, void 0, function* () {
+                const res = yield redis_1.redis.get('covers');
+                if (res != null) {
+                    return JSON.parse(res);
+                }
                 const types = [
                     function () {
                         return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ dateMs: -1 }).limit(limit); });
@@ -46,8 +51,9 @@ exports.default = {
                 const names = ['popular', 'nuevo', 'shonen', 'seinen', 'dobladas', 'largas'];
                 const covers = [];
                 for (let x = 0; x < type.length; x++) {
-                    covers.push({ section: types[type[x]], name: names[type[x]] });
+                    covers.push({ section: yield types[type[x]](), name: names[type[x]] });
                 }
+                redis_1.redis.set('covers', JSON.stringify(covers));
                 return covers;
             });
         },
@@ -89,7 +95,7 @@ exports.default = {
                 if (decoded == 'error unexpected') {
                     return [];
                 }
-                const userFound = yield USERS_1.default.findById(decoded._id);
+                const userFound = yield USERS_1.default.findById(decoded === null || decoded === void 0 ? void 0 : decoded["_id"]);
                 return userFound.viewing.slice(0, 3);
             });
         }
