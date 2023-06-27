@@ -1,7 +1,13 @@
+// MODULES
 import { makeExecutableSchema } from 'graphql-tools';
 import { createYoga } from 'graphql-yoga';
+
+// TYPES
 import types from './types/index';
-import resolver from './resolvers';
+
+// RESOLVER
+import Resolver from './resolvers/index';
+const resolver = new Resolver().resolver;
 
 export default function(){
     return createYoga({

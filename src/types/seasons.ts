@@ -7,10 +7,10 @@ export default `
     }
 
     type chapters_seasons {
-        id: ID
         name: String
+        thumb: String
         duration: String
-        thumnail: String
         number: Int
+        chapter: ID
     }
 `

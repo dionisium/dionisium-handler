@@ -1,15 +1,14 @@
 import chapters from "./chapters";
 import cover from "./cover";
-import language from "./language";
 import seasons from "./seasons";
 import series from "./series";
 
 // QUERY
 export default  `
     type Query {
-        get_cover(type: [Int!], limit: Int!): [cover_object]
-        get_series(id: String!): Serie
-        get_language(id: String!): Language
+        get_covers_list(type: String!, mode: String!, to: Int!, limit: Int!): cover_object
+        get_recomendations(type: String!, limit: Int!): [Cover]
+        get_serie(id: String!): Cover
         get_season(id: String!): Seasons
         get_chapter(id: String!): Chapters
         search(series: Int!, chapters: Int!, search: String!): Search
@@ -20,13 +19,12 @@ export default  `
         chapters: [Chapters]
     }
     type cover_object {
-        section: [Cover]
         name: String
+        section: [Cover]
     }
 
     ${cover}
     ${series}
-    ${language}
     ${seasons}
     ${chapters}
 `;

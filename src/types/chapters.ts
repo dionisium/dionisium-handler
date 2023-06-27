@@ -2,13 +2,14 @@ export default `
     type Chapters {
         _id: ID
         name: String
-        number: Int
-        description: String
         secure_url: String
-        thumnail: String
+        description: String
+        score: Int
+        number: Int
         duration: String
-        season: ID
+        thumnail: String
         serie: String
+        season: ID
     }
 
     type Viewing {
