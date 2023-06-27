@@ -13,13 +13,17 @@ class default_1 {
     constructor() {
         this.resolver = {
             Query: {
-                search: home.search,
+                // HOME
+                get_covers_list: home.get_covers_list,
                 get_viewing: home.get_viewing,
-                get_cover: home.get_cover,
-                get_series: series.get_series,
-                get_language: series.get_language,
+                get_recomendations: home.get_recomendations,
+                // SERIE
+                get_serie: series.get_serie,
+                // PLAYER
                 get_season: series.get_season,
-                get_chapter: series.get_chapter
+                get_chapter: series.get_chapter,
+                // SEARCHER
+                search: home.search,
             }
         };
     }

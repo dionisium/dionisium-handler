@@ -38,5 +38,17 @@ function start() {
         });
     });
 }
-start();
+function restart() {
+    runServer();
+}
+function runServer() {
+    start()
+        .then(server => { console.log('on connection'); })
+        .catch((err) => {
+        console.log(err);
+        restart();
+        return;
+    });
+}
+runServer();
 //# sourceMappingURL=index.js.map

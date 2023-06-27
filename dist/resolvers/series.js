@@ -12,23 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SERIE_1 = __importDefault(require("../models/SERIE"));
 const SERIE_COVER_1 = __importDefault(require("../models/SERIE_COVER"));
-const LANGUAGE_1 = __importDefault(require("../models/LANGUAGE"));
 const SEASON_1 = __importDefault(require("../models/SEASON"));
 const CHAPTER_1 = __importDefault(require("../models/CHAPTER"));
 class default_1 {
-    get_series(root, { id }) {
+    get_serie(root, { id }) {
         return __awaiter(this, void 0, void 0, function* () {
             const coverFound = yield SERIE_COVER_1.default.findById(id);
-            const serieFound = yield SERIE_1.default.findById(coverFound.serie);
-            return serieFound;
-        });
-    }
-    get_language(root, { id }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const languageFound = yield LANGUAGE_1.default.findById(id);
-            return languageFound;
+            return coverFound;
         });
     }
     get_season(root, { id }) {

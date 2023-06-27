@@ -3,15 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = `
     type Cover {
         _id: ID
+        PCCover: String
+        MovileCover: String
         name: String
-        thumnail: String
-        serie: ID
-        views: Int
-        gender: [String]
+        description: String
         date: String
-        dateMs: Float
-        languages: [String]
+        views: Int
         seasons: Int
+        languages: [languages_covers]
+        type: String
+        tags: [String]
+        serie: ID
+        createdAt: ID
+        updatedAt: ID
+    }
+
+    type languages_covers {
+        language: String
+        seasons:[seasons_languages_covers]
+    }
+
+    type seasons_languages_covers {
+        season: ID
+        number: Int
     }
 `;
 //# sourceMappingURL=cover.js.map

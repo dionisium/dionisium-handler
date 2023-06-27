@@ -17,42 +17,48 @@ const USERS_1 = __importDefault(require("../models/USERS"));
 const SERIE_COVER_1 = __importDefault(require("../models/SERIE_COVER"));
 const CHAPTER_1 = __importDefault(require("../models/CHAPTER"));
 // MODULES
+const graphql_yoga_1 = require("graphql-yoga");
 const jsonwebtoken_config_1 = __importDefault(require("../libs/jsonwebtoken_config"));
 const redis_1 = require("../redis");
 class default_1 {
-    get_cover(root, { type, limit }) {
+    get_covers_list(root, { type, mode, to, limit }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield redis_1.redis.get('covers');
-            if (res != null) {
-                return JSON.parse(res);
-            }
-            const types = [
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ dateMs: -1 }).limit(limit); });
-                },
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ views: -1 }).limit(limit); });
-                },
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find().sort({ seasons: -1 }).limit(limit); });
-                },
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ gender: 'shonen' }).sort({ views: -1 }).limit(limit); });
-                },
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ gender: 'seinen' }).sort({ views: -1 }).limit(limit); });
-                },
-                function () {
-                    return __awaiter(this, void 0, void 0, function* () { return yield SERIE_COVER_1.default.find({ languages: 'español' }).sort({ views: -1 }).limit(limit); });
+            if (type == 'shonen' || type == 'isekai') {
+                const res = yield redis_1.redis.get(`${type}-${mode}-${to}`);
+                if (res != null) {
+                    return JSON.parse(res);
                 }
-            ];
-            const names = ['popular', 'nuevo', 'shonen', 'seinen', 'dobladas', 'largas'];
-            const covers = [];
-            for (let x = 0; x < type.length; x++) {
-                covers.push({ section: yield types[type[x]](), name: names[type[x]] });
             }
-            redis_1.redis.set('covers', JSON.stringify(covers), { EX: (60 * 60) });
-            return covers;
+            if (to > 1 || to < -1) {
+                return (0, graphql_yoga_1.createGraphQLError)('the input "to" is invalid');
+            }
+            if (mode != 'score' && mode != 'createdAt' && mode != "views") {
+                return (0, graphql_yoga_1.createGraphQLError)('the input "mode" is invalid');
+            }
+            let order = [mode, to];
+            let map = new Map([order]);
+            let sort = Object.fromEntries(map);
+            const cover = yield SERIE_COVER_1.default.find({ type }).sort(sort).limit(limit);
+            const list = { name: `${type}-${mode}-${to}`, section: cover };
+            if (type == 'shonen' || type == 'isekai') {
+                redis_1.redis.set(list.name, JSON.stringify(list), { EX: (60 * 60 * 24) });
+            }
+            return list;
+        });
+    }
+    get_recomendations(root, { limit, type }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield redis_1.redis.get(type);
+            if (res != null) {
+                const data = JSON.parse(res);
+                return data.slice(0, limit);
+            }
+            else {
+                const res = yield redis_1.redis.get('forYou');
+                if (res != null) {
+                    return JSON.parse(res);
+                }
+            }
         });
     }
     search(root, { series, chapters, search }) {
