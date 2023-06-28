@@ -29,10 +29,4 @@ async function start():Promise<void>{
     });
 }
 
-start()
-    .then(server => {console.log('on connection');})
-    .catch((err)=>{
-        console.log(err);
-        start();
-        return;
-    });
+start();

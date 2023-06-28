@@ -38,11 +38,5 @@ function start() {
         });
     });
 }
-start()
-    .then(server => { console.log('on connection'); })
-    .catch((err) => {
-    console.log(err);
-    start();
-    return;
-});
+start();
 //# sourceMappingURL=index.js.map
