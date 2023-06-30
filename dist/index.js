@@ -28,7 +28,7 @@ function start() {
         yield app.register(cors_1.default);
         // DATABASE
         require('./database');
-        // require('./redis');
+        require('./redis');
         // GRAPHQL SERVER
         app.setDefaultRoute((0, server_1.default)());
         // app.setNotFoundHandler(graphql_server());

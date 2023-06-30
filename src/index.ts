@@ -17,7 +17,7 @@ async function start():Promise<void>{
 
     // DATABASE
     require('./database');
-    // require('./redis');
+    require('./redis');
     
     // GRAPHQL SERVER
     app.setDefaultRoute(graphql_server());

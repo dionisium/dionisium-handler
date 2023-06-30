@@ -16,6 +16,6 @@ export default function(){
             typeDefs: [types]
         }),
         landingPage:false,
-        graphqlEndpoint:'/',
+        graphqlEndpoint:'/api/',
     });
 }

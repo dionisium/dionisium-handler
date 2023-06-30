@@ -18,7 +18,7 @@ function default_1() {
             typeDefs: [index_1.default]
         }),
         landingPage: false,
-        graphqlEndpoint: '/',
+        graphqlEndpoint: '/api/',
     });
 }
 exports.default = default_1;

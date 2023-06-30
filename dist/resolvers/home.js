@@ -19,15 +19,15 @@ const CHAPTER_1 = __importDefault(require("../models/CHAPTER"));
 // MODULES
 const graphql_yoga_1 = require("graphql-yoga");
 const jsonwebtoken_config_1 = __importDefault(require("../libs/jsonwebtoken_config"));
-// import { redis } from "../redis";
+const redis_1 = require("../redis");
 class default_1 {
     get_covers_list(root, { type, mode, to, limit }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (type == 'shonen' || type == 'isekai') {
-                // const res = await redis.get(`${type}-${mode}-${to}`);
-                // if(res != null){
-                //     return JSON.parse(res);
-                // }
+                const res = yield redis_1.redis.get(`${type}-${mode}-${to}`);
+                if (res != null) {
+                    return JSON.parse(res);
+                }
             }
             if (to > 1 || to < -1) {
                 return (0, graphql_yoga_1.createGraphQLError)('the input "to" is invalid');
@@ -41,24 +41,24 @@ class default_1 {
             const cover = yield SERIE_COVER_1.default.find({ type }).sort(sort).limit(limit);
             const list = { name: `${type}-${mode}-${to}`, section: cover };
             if (type == 'shonen' || type == 'isekai') {
-                // redis.set(list.name, JSON.stringify(list), {EX:(60*60*24)});
+                redis_1.redis.set(list.name, JSON.stringify(list), { EX: (60 * 60 * 24) });
             }
             return list;
         });
     }
     get_recomendations(root, { limit, type }) {
         return __awaiter(this, void 0, void 0, function* () {
-            // const res = await redis.get(type);
-            // if(res != null){
-            //     const data:Array<any> = JSON.parse(res);
-            //     return data.slice(0, limit);
-            // }
-            // else{
-            //     const res = await redis.get('forYou');
-            //     if(res != null){
-            //         return JSON.parse(res);
-            //     }
-            // }
+            const res = yield redis_1.redis.get(type);
+            if (res != null) {
+                const data = JSON.parse(res);
+                return data.slice(0, limit);
+            }
+            else {
+                const res = yield redis_1.redis.get('forYou');
+                if (res != null) {
+                    return JSON.parse(res);
+                }
+            }
         });
     }
     search(root, { series, chapters, search }) {
