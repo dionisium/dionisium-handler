@@ -8,15 +8,8 @@ export const redis = createClient({
     }
 });
 
-// function connect():void{
-//     try{
-        redis.connect()
-            .then(reply => console.log('redis on connection'))
-            .catch(err => {
-                console.log(err);
-            });
-//     }catch(err){
-//         connect();
-//     }
-// }
-// connect();
+redis.connect()
+    .then(reply => console.log('redis on connection'))
+    .catch(err => {
+        console.log(err);
+    });

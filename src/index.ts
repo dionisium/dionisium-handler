@@ -17,14 +17,15 @@ async function start():Promise<void>{
 
     // DATABASE
     require('./database');
-    require('./redis');
+    // require('./redis');
     
     // GRAPHQL SERVER
     app.setDefaultRoute(graphql_server());
+    // app.setNotFoundHandler(graphql_server());
 
     // SERVER
-    const PORT = process.env.PORT || 4560;
-    app.listen(PORT, ()=>{
+    const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : 4560;
+    app.listen({port:PORT}, (_err, _address)=>{
         console.log('server on port:' + PORT);
     });
 }
