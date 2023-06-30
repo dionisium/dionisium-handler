@@ -33,7 +33,7 @@ function start() {
         app.setDefaultRoute((0, server_1.default)());
         // app.setNotFoundHandler(graphql_server());
         // SERVER
-        const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : 4560;
+        const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
         app.listen({ port: PORT }, (_err, _address) => {
             console.log('server on port:' + PORT);
         });

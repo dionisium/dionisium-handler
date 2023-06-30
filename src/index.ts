@@ -24,7 +24,7 @@ async function start():Promise<void>{
     // app.setNotFoundHandler(graphql_server());
 
     // SERVER
-    const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : 4560;
+    const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
     app.listen({port:PORT}, (_err, _address)=>{
         console.log('server on port:' + PORT);
     });
