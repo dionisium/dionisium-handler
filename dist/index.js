@@ -28,12 +28,13 @@ function start() {
         yield app.register(cors_1.default);
         // DATABASE
         require('./database');
-        require('./redis');
+        // require('./redis');
         // GRAPHQL SERVER
         app.setDefaultRoute((0, server_1.default)());
+        // app.setNotFoundHandler(graphql_server());
         // SERVER
-        const PORT = process.env.PORT || 4560;
-        app.listen(PORT, () => {
+        const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : 4560;
+        app.listen({ port: PORT }, (_err, _address) => {
             console.log('server on port:' + PORT);
         });
     });

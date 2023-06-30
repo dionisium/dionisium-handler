@@ -9,16 +9,9 @@ exports.redis = (0, redis_1.createClient)({
         port: 16011
     }
 });
-// function connect():void{
-//     try{
 exports.redis.connect()
     .then(reply => console.log('redis on connection'))
     .catch(err => {
     console.log(err);
 });
-//     }catch(err){
-//         connect();
-//     }
-// }
-// connect();
 //# sourceMappingURL=redis.js.map
