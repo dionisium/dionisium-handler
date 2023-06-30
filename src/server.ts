@@ -10,12 +10,16 @@ import Resolver from './resolvers/index';
 const resolver = new Resolver().resolver;
 
 export default function(){
-    return createYoga({
-        schema:makeExecutableSchema({
-            resolvers: [resolver],
-            typeDefs: [types]
-        }),
-        landingPage:false,
-        graphqlEndpoint:'/api/',
+    // return createYoga({
+    //     schema:makeExecutableSchema({
+    //         resolvers: [resolver],
+    //         typeDefs: [types]
+    //     }),
+    //     landingPage:false,
+    //     graphqlEndpoint:'/',
+    // });
+    return makeExecutableSchema({
+        resolvers: [resolver],
+        typeDefs: [types]
     });
 }

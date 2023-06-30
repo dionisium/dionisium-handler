@@ -18,6 +18,7 @@
     "graphql-tools": "^8.3.18",
     "graphql-yoga": "^3.7.0",
     "jsonwebtoken": "^9.0.0",
+    "mercurius": "^13.0.0",
     "method-override": "^3.0.0",
     "mongoose": "^7.0.0",
     "redis": "^4.6.5"

@@ -10,6 +10,7 @@ import fastify from 'fastify';
 import cors from '@fastify/cors';
 import MOD from 'method-override';
 import graphql_server from './server';
+import mercurius from 'mercurius';
 
 async function start():Promise<void>{
     const app = fastify({logger:true});
@@ -20,7 +21,14 @@ async function start():Promise<void>{
     require('./redis');
     
     // GRAPHQL SERVER
-    app.setDefaultRoute(graphql_server());
+    await app.register(mercurius, {
+        schema:graphql_server(),
+        graphiql:'graphiql',
+        ide:'graphiql',
+        path:'/',
+        
+    });
+    // app.setDefaultRoute(graphql_server());
     // app.setNotFoundHandler(graphql_server());
 
     // SERVER
