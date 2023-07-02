@@ -26,7 +26,7 @@ async function start():Promise<void>{
         graphiql:'graphiql',
         ide:'graphiql',
         path:'/',
-        
+
     });
     // app.setDefaultRoute(graphql_server());
     // app.setNotFoundHandler(graphql_server());
