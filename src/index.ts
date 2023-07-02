@@ -14,7 +14,7 @@ import mercurius from 'mercurius';
 
 async function start():Promise<void>{
     const app = fastify({logger:true});
-    await app.register(cors);
+    await app.register(cors, {origin:'https://dionisium.vercel.app'});
 
     // DATABASE
     require('./database');
