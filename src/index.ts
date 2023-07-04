@@ -21,19 +21,14 @@ async function start():Promise<void>{
     require('./redis');
     
     // GRAPHQL SERVER
-    // await app.register(mercurius, {
-    //     schema:graphql_server(),
-    //     graphiql:'graphiql',
-    //     ide:'graphiql',
-    //     path:'/',
-    // });
-    app.setDefaultRoute(graphql_server());
+    await app.register(mercurius, {
+        schema:graphql_server(),
+        graphiql:'graphiql',
+        ide:'graphiql',
+        path:'/',
+    });
+    // app.setDefaultRoute(graphql_server());
     // app.setNotFoundHandler(graphql_server());
-
-    // app.get('/', async function (req:any, reply) {
-    //     const { query } = req.body;
-    //     return reply.graphql(query);
-    // });
 
     // SERVER
     const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
