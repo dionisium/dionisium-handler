@@ -22,7 +22,6 @@ if (PROD == false) {
 const fastify_1 = __importDefault(require("fastify"));
 const cors_1 = __importDefault(require("@fastify/cors"));
 const server_1 = __importDefault(require("./server"));
-const mercurius_1 = __importDefault(require("mercurius"));
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, fastify_1.default)({ logger: true });
@@ -31,20 +30,18 @@ function start() {
         require('./database');
         require('./redis');
         // GRAPHQL SERVER
-        yield app.register(mercurius_1.default, {
-            schema: (0, server_1.default)(),
-            graphiql: 'graphiql',
-            ide: 'graphiql',
-            path: '/',
-        });
-        // app.setDefaultRoute(graphql_server());
+        // await app.register(mercurius, {
+        //     schema:graphql_server(),
+        //     graphiql:'graphiql',
+        //     ide:'graphiql',
+        //     path:'/',
+        // });
+        app.setDefaultRoute((0, server_1.default)());
         // app.setNotFoundHandler(graphql_server());
-        app.get('/', function (req, reply) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const { query } = req.body;
-                return reply.graphql(query);
-            });
-        });
+        // app.get('/', async function (req:any, reply) {
+        //     const { query } = req.body;
+        //     return reply.graphql(query);
+        // });
         // SERVER
         const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
         app.listen({ port: PORT }, (_err, _address) => {
