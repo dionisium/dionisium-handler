@@ -39,6 +39,12 @@ function start() {
         });
         // app.setDefaultRoute(graphql_server());
         // app.setNotFoundHandler(graphql_server());
+        app.get('/', function (req, reply) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const { query } = req.body;
+                return reply.graphql(query);
+            });
+        });
         // SERVER
         const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
         app.listen({ port: PORT }, (_err, _address) => {
