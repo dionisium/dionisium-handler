@@ -26,7 +26,7 @@ const mercurius_1 = __importDefault(require("mercurius"));
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, fastify_1.default)({ logger: true });
-        yield app.register(cors_1.default, { origin: /\.dionisium\.vercel\.app$/, credentials: false });
+        yield app.register(cors_1.default, { origin: /\.dionisium.vercel.app$/ });
         // DATABASE
         require('./database');
         require('./redis');
