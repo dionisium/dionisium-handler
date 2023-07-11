@@ -3,6 +3,7 @@
   "packageManager":"npm@9.2.0",
   "buildCommand":"npm install typescript; npm run build",
   "devCommand":"npm run prod",
+
   "builds": [
     {
       "src": "package.json",
