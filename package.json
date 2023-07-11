@@ -5,8 +5,7 @@
   "main": "dist/index.ts",
   "scripts": {
     "start": "nodemon src/index.ts --exec ts-node",
-    "build": "npx tsc",
-    "prod": "node dist/index.js"
+    "build": "npx tsc"
   },
   "keywords": [],
   "author": "",
