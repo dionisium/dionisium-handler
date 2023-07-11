@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand":"npm install typescript; npm run build",
+  "devCommand":"npm run prod",
   "routes": [
     {
       "src": "/(.*)",
