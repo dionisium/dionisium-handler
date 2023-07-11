@@ -5,9 +5,5 @@
       "src": "/(.*)",
       "dest": "dist/index.js"
     }
-  ],
-  "deploy":{
-    "use": "node dist/index.js",
-    "src": "/(.*)"
-  }
+  ]
 }
