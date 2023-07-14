@@ -1,19 +1,27 @@
 {
   "version": 2,
-  "packageManager":"npm@9.2.0",
-  "buildCommand":"npm install typescript; npm run build; npm run prod",
-  "devCommand":"npm run prod",
-
   "builds": [
     {
       "src": "package.json",
-      "use": "vercel-sapper"
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dist/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "dist/index.js"
+    { "src": "/(.*)", "dest": "/index.js" }
+  ],
+  "env": {
+    "BUILD_COMMAND": "npm install typescript && npm run build",
+    "PROJECT_ROOT": "./dist",
+    "INSTALL_COMMAND": "npm install",
+    "PROD_COMMAND": "npm run prod"
+  },
+  "install": {
+    "env": {
+      "NODE_ENV": "production"
     }
-  ]
+  }
 }
