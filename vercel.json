@@ -1,18 +1,13 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "src/index.ts",
-      "use": "@vercel/node"
-    }
+    { "src": "package.json", "use": "vercel-sapper"}
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/dist/index.js"
-    }
+    { "src": "/vercel/output/(.*)", "dest": "/vercel/output/index.js" }
   ],
   "env": {
-    "PRODUCTION": "true"
-  }
+    "NODE_ENV": "production"
+  },
+  "installCommand": "npm install"
 }
