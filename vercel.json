@@ -1,5 +1,5 @@
 {
-  "framework": "angular",
+  "framework": null,
   "buildCommand": "npm install typescript; npm run build",
   "outputDirectory": "./dist",
   "routes": [
@@ -9,5 +9,8 @@
     "NODE_ENV": "production"
   },
   "installCommand": "npm install",
-  "devCommand": "npm run prod"
+  "devCommand": "npm run prod",
+  "builds": [
+    { "src": "package.json", "use": "npm run prod" }
+  ]
 }
