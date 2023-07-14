@@ -9,9 +9,5 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "buildCommand": "npm install typescript; npm run build",
-  "outputDirectory": "./dist",
-  "output":"./dist",
-  "installCommand": "npm install",
-  "devCommand": "npm run start"
+  "installCommand": "npm install"
 }
