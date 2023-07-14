@@ -1,6 +1,6 @@
 {
   "builds": [
-    { "src": "package.json", "use": "npm install typescript && npm run build" }
+    { "src": "package.json", "use": "npm install typescript; npm run build" }
   ],
   "outputDirectory": "./dist",
   "routes": [
