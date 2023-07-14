@@ -1,4 +1,5 @@
 {
+  "framework": "angular",
   "buildCommand": "npm install typescript; npm run build",
   "outputDirectory": "./dist",
   "routes": [
