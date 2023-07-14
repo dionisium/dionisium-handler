@@ -3,7 +3,7 @@
   "buildCommand": "npm install typescript; npm run build",
   "outputDirectory": "./dist",
   "routes": [
-    { "src": "/dist/(.*)", "dest": "/index.js" }
+    { "src": "/dist/(.*)", "dest": "/dist/index.js" }
   ],
   "env": {
     "NODE_ENV": "production"
