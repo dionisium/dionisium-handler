@@ -2,11 +2,13 @@
   "builds": [
     { "src": "package.json", "use": "npm install typescript && npm run build" }
   ],
+  "outputDirectory": "./dist",
   "routes": [
     { "src": "/dist/(.*)", "dest": "/index.js" }
   ],
   "env": {
     "NODE_ENV": "production"
   },
-  "start": "npm run prod"
+  "installCommand": "npm install",
+  "devCommand": "npm run prod"
 }
