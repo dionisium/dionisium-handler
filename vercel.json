@@ -2,7 +2,7 @@
   "framework": null,
   "builds": [
     { "src": "package.json", "use": "vercel-sapper"},
-    { "src": "/dist/index.js", "use":"npm"}
+    { "src": "/dist/index.js" }
   ],
   "routes": [
     { "src": "/dist/(.*)", "dest": "/dist/index.js" }
