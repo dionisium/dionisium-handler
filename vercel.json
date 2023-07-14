@@ -1,16 +1,16 @@
 {
   "framework": null,
-  "buildCommand": "npm install typescript; npm run build",
-  "outputDirectory": "./dist",
+  "builds": [
+    { "src": "package.json", "use": "npm" }
+  ],
   "routes": [
     { "src": "/dist/(.*)", "dest": "/dist/index.js" }
   ],
   "env": {
     "NODE_ENV": "production"
   },
+  "buildCommand": "npm install typescript; npm run build",
+  "outputDirectory": "./dist",
   "installCommand": "npm install",
-  "devCommand": "npm run prod",
-  "builds": [
-    { "src": "package.json", "use": "npm run prod" }
-  ]
+  "devCommand": "npm run start"
 }
