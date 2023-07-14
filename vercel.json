@@ -1,10 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "/dist/index.js", "use": "node"}
+    { "src": "/src/index.ts", "use": "@vercel/node"}
   ],
   "routes": [
-    { "src": "/dist/(.*)", "dest": "/dist/index.js" }
+    { "src": "/src/(.*)", "dest": "/src/index.ts" }
   ],
   "env": {
     "NODE_ENV": "production"
