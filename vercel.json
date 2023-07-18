@@ -2,7 +2,10 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "vercel-sapper"
+      "use": "vercel-sapper",
+      "config": {
+        "include": ["src/(.*)"]
+      }
     }
   ],
   "routes": [
