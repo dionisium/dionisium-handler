@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm i typescript; npm run build",
+  "buildCommand": "npm i typescript; npm run build; npm run start",
   "outputDirectory": "./dist",
   "routes": [
     {
