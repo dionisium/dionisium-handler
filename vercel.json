@@ -3,5 +3,5 @@
   "buildCommand": "npm run build",
   "outputDirectory": "./dist",
   "installCommand": "npm i",
-  "devCommand": "npm run start"
+  "prodCommand": "npm run start"
 }
