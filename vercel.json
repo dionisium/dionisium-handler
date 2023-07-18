@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "npm i node",
+  "buildCommand": "npm i typescript; npm run build",
   "builds": [
     {
       "src": "./dist/index.js",
-      "use": "node"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
