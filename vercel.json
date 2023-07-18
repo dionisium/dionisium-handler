@@ -9,5 +9,6 @@
       "src": "./dist/(.*)",
       "dest": "./dist/index.js"
     }
-  ]
+  ],
+  "rewrites": [{ "source": "./dist/(.*)", "destination": "./dist/index.js" }]
 }
