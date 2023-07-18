@@ -1,10 +1,11 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "package.json",
       "use": "vercel-sapper",
       "config": {
-        "include": ["src/(.*)"]
+        "include": ["./dist/index.js"]
       }
     }
   ],
