@@ -3,5 +3,11 @@
   "buildCommand": "npm run build",
   "outputDirectory": "./dist",
   "installCommand": "npm i",
-  "prodCommand": "npm run start"
+  "devCommand": "npm run start",
+  "routes": [
+    {
+      "src": "./dist/(.*)",
+      "dest": "./dist/index.js"
+    }
+  ]
 }
