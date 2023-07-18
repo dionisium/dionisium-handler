@@ -1,7 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "npm i typescript; npm run build; npm run start",
+  "buildCommand": "npm run build",
   "outputDirectory": "./dist",
+  "devCommand": "npm run start",
   "routes": [
     {
       "src": "/api/(.*)",
