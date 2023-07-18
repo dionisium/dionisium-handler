@@ -1,14 +1,14 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "./dist",
-  "installCommand": "npm i",
-  "devCommand": "npm run start",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "vercel-sapper"
+    }
+  ],
   "routes": [
     {
       "src": "./dist/(.*)",
       "dest": "./dist/index.js"
     }
-  ],
-  "rewrites": [{ "source": "./dist/(.*)", "destination": "./dist/index.js" }]
+  ]
 }
