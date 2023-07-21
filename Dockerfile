@@ -11,4 +11,5 @@ RUN npm install
 # RUN npm run build
 
 # Paso de ejecución
+EXPOSE 4560
 CMD ["npm", "start"]
