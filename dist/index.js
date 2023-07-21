@@ -36,7 +36,7 @@ function start() {
             schema: (0, server_1.default)(),
             graphiql: 'graphiql',
             ide: 'graphiql',
-            path: '/',
+            path: '/api/',
         });
         // app.setDefaultRoute(graphql_server());
         // app.setNotFoundHandler(graphql_server());
@@ -45,6 +45,7 @@ function start() {
         app.listen({ port: PORT }, (_err, _address) => {
             console.log('server on port:' + PORT);
         });
+        app.get('/', (req, reply) => { reply.code(200).send({ message: "listen" }); });
     });
 }
 start();
