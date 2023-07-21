@@ -3,7 +3,7 @@ FROM node:18
 
 # Directorio
 WORKDIR /
-COPY ./ /dist
+COPY ./ ./
 
 # Paso de compilación
 # RUN npm cache clean --force
