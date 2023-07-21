@@ -11,4 +11,4 @@ RUN npm install
 # RUN npm run build
 
 # Paso de ejecución
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
