@@ -5,6 +5,7 @@ FROM node:18
 WORKDIR ./
 
 # Paso de compilación
+RUN npm cache clean --force
 RUN npm install
 RUN npm run build
 
