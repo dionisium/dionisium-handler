@@ -1,7 +1,12 @@
+# Entorno
 FROM node:18
 
+# Directorio
 WORKDIR ./
 
+# Paso de compilación
 RUN npm install
+RUN npm run build
 
-CMD ["npm", "start"]
+# Paso de ejecución
+CMD ["npm", "run", "start"]
