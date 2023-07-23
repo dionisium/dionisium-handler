@@ -13,5 +13,5 @@ RUN npm install --production
 COPY ./ ./
 
 # Paso de ejecución
-EXPOSE 8080
+EXPOSE 3000
 CMD ["npm", "start"]

@@ -12,6 +12,8 @@ import MOD from 'method-override';
 import graphql_server from './server';
 import mercurius from 'mercurius';
 
+import http from 'http';
+
 async function start():Promise<void>{
     const app = fastify({logger:true});
     // await app.register(cors, {origin:/\.dionisium.vercel.app$/});
@@ -33,12 +35,14 @@ async function start():Promise<void>{
 
     // SERVER
     const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
-    app.listen({port:PORT}, (_err, _address)=>{
+    const SERVER = app.listen({port:PORT}, (_err, _address)=>{
         console.info(_address);
         console.log('server on port:' + PORT);
         console.error(_err);
     });
     app.get('/', (req, reply)=>{reply.code(200).send({message:"listen"});});
+
 }
 
+http.createServer().listen(3000);
 start();
