@@ -3,12 +3,12 @@ FROM node:18
 
 # Directorio
 WORKDIR /
-COPY ./ ./
 
-# Paso de compilación
-# RUN npm cache clean --force
-RUN npm install
-# RUN npm run build
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install --production
+
+COPY ./ ./
 
 # Paso de ejecución
 EXPOSE 3000
