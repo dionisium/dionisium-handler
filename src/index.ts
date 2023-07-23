@@ -33,9 +33,10 @@ async function start():Promise<void>{
 
     // SERVER
     const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
-    const HOST:string = process.env.HOST || "localhost";
-    app.listen({port:PORT, host:HOST}, (_err, _address)=>{
+    app.listen({port:PORT}, (_err, _address)=>{
+        console.info(_address);
         console.log('server on port:' + PORT);
+        console.error(_err);
     });
     app.get('/', (req, reply)=>{reply.code(200).send({message:"listen"});});
 }
