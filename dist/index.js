@@ -42,9 +42,10 @@ function start() {
         // app.setNotFoundHandler(graphql_server());
         // SERVER
         const PORT = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
-        app.listen({ port: PORT }, (_err, _address) => {
+        const HOST = process.env.HOST || 'localhost';
+        app.listen({ port: PORT, host: HOST }, (_err, _address) => {
             console.info(_address);
-            console.log('server on port:' + PORT);
+            console.log(`Sever run in ${HOST}:${PORT}`);
             console.error(_err);
         });
         app.get('/', (req, reply) => { reply.code(200).send({ message: "listen" }); });
