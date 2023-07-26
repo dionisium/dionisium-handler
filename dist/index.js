@@ -36,7 +36,7 @@ function start() {
             schema: (0, server_1.default)(),
             graphiql: 'graphiql',
             ide: 'graphiql',
-            path: '/api/',
+            path: '/',
         });
         // app.setDefaultRoute(graphql_server());
         // app.setNotFoundHandler(graphql_server());
@@ -48,7 +48,6 @@ function start() {
             console.log(`Sever run in ${HOST}:${PORT}`);
             console.error(_err);
         });
-        app.get('/', (req, reply) => { reply.code(200).send({ message: "listen" }); });
     });
 }
 start();

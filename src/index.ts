@@ -26,7 +26,7 @@ async function start():Promise<void>{
         schema:graphql_server(),
         graphiql:'graphiql',
         ide:'graphiql',
-        path:'/api/',
+        path:'/',
     });
     // app.setDefaultRoute(graphql_server());
     // app.setNotFoundHandler(graphql_server());
@@ -39,7 +39,6 @@ async function start():Promise<void>{
         console.log(`Sever run in ${HOST}:${PORT}`);
         console.error(_err);
     });
-    app.get('/', (req, reply)=>{reply.code(200).send({message:"listen"});});
 }
 
 start();
