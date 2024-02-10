@@ -1,63 +1,51 @@
 // MODELS
-import USERS from "../models/USERS";
-import COVERS from "../models/SERIE_COVER";
 import CHAPTER from "../models/CHAPTER";
+import SERIE from "../models/SERIE";
 
 // MODULES
 import { createGraphQLError } from "graphql-yoga";
-import jwt_libs from "../libs/jsonwebtoken_config";
-import { redis } from "../redis";
+import DataLocal, {_LocalData} from "../libs/datalocal";
+import { _Serie } from "../libs/models";
 
 export default class {
-    async get_covers_list(root, {type, mode, to, limit}){
-        if(type == 'shonen' || type == 'isekai'){
-            const res = await redis.get(`${type}-${mode}-${to}`);
-            if(res != null){
-                return JSON.parse(res);
-            }
+    async get_series_list(root, {type, mode, to, limit}){
+        if(type == 'none'){
+            const res = DataLocal.get(`${type}-${mode}-${to}`);
+            if(res){return res;}
         }
+
         if(to > 1 || to < -1){
             return createGraphQLError('the input "to" is invalid');
         }
         if(mode != 'score' && mode != 'createdAt' && mode != "views"){
             return createGraphQLError('the input "mode" is invalid');
         }
-        let order:any = [mode, to];
-        let map = new Map([order]);
-        let sort = Object.fromEntries(map);
-        const cover = await COVERS.find({type}).sort(sort).limit(limit);
-        const list = {name:`${type}-${mode}-${to}`, section:cover};
+        
+        let sort = {}; Object.defineProperty(sort, mode, {value:to});
+        const series:_Serie[] = type!='none'
+            ? await SERIE.find({type}).sort(sort).limit(limit)
+            : await SERIE.find().sort(sort).limit(limit);
 
-        if(type == 'shonen' || type == 'isekai'){
-            redis.set(list.name, JSON.stringify(list), {EX:(60*60*24)});
+        const list:_LocalData = {type:`${type}-${mode}-${to}`, _object:series};
+
+        if(type == 'none'){
+            DataLocal.next(list);
         }
+
         return list;
     }
 
     async get_recomendations(root, {limit, type}){
-        const res = await redis.get(type);
-        if(res != null){
-            const data:Array<any> = JSON.parse(res);
-            return data.slice(0, limit);
+        const res = DataLocal.get(type);
+        if(res != undefined){
+            return res._object.slice(0, limit);
         }
-        else{
-            const res = await redis.get('forYou');
-            if(res != null){
-                return JSON.parse(res);
-            }
-        }
+        return createGraphQLError('error internal, data is empty');
     }
 
     async search(root, {series, chapters, search}){
-        const serieFound = await COVERS.find({name:RegExp(search)}).limit(series);
+        const serieFound = await SERIE.find({name:RegExp(search)}).limit(series);
         const chaptersFound = await CHAPTER.find({name:RegExp(search)}).limit(chapters);
         return {serie:serieFound, chapters:chaptersFound};
-    }
-
-    async get_viewing(root, {token}){
-        const decoded = await jwt_libs.decoded(token);
-        if(decoded == 'error unexpected'){return []}
-        const userFound = await USERS.findById(decoded?.["_id"]);
-        return userFound.viewing.slice(0, 3);
     }
 }

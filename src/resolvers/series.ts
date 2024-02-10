@@ -1,22 +1,33 @@
 import SERIE from "../models/SERIE";
-import COVERS from "../models/SERIE_COVER";
-import SEASON from "../models/SEASON";
 import CHAPTER from "../models/CHAPTER";
+import { createGraphQLError } from "graphql-yoga";
+import { _Chapter, _Seasons } from "../libs/models";
 
+declare interface _Chapter_Res{
+    chapter:_Chapter,
+    season:_Seasons | null
+}
 
 export default class {
     async get_serie(root, {id}){
-        const coverFound = await COVERS.findById(id);
-        return coverFound;
+        try {
+            const serieFound = await SERIE.findById(id);
+            serieFound.updateOne({views: (serieFound.views + 1)});
+            return serieFound;
+        } catch {
+            createGraphQLError('Serie not Found');
+        }
     }
 
-    async get_season(root, {id}){
-        const seasonFound = await SEASON.findById(id);
-        return seasonFound;
-    }
-
-    async get_chapter(root, {id}){
-        const chapterFound = await CHAPTER.findById(id);
-        return chapterFound;
+    async get_chapter(root, {id, seasons}){
+        try {
+            let res:_Chapter_Res = {chapter:await CHAPTER.findById(id), season:null}
+            if(seasons){
+                seasons = (await SERIE.findById(res.chapter.serie)).seasons;
+            }
+            return res;
+        } catch {
+            createGraphQLError('Chapter not Found');
+        }
     }
 }

@@ -2,14 +2,19 @@ export default `
     type Chapters {
         _id: ID
         name: String
-        secure_url: String
+        secures_urls: Urls
         description: String
-        score: Int
+        
         number: Int
-        duration: String
-        thumnail: String
+        
         serie: String
         season: ID
+    }
+
+    type Urls {
+        spanish: String
+        english: String
+        japanese: String
     }
 
     type Viewing {

@@ -8,28 +8,19 @@ if(PROD == false){
 // IMPORTS
 import fastify from 'fastify';
 import cors from '@fastify/cors';
-import MOD from 'method-override';
-import graphql_server from './server';
-import mercurius from 'mercurius';
+import graphql_server from './server/server';
 
 async function start():Promise<void>{
     const app = fastify({logger:true});
     // await app.register(cors, {origin:/\.dionisium.vercel.app$/});
-    await app.register(cors, {});
+    await app.register(cors, {origin:true});
 
     // DATABASE
-    require('./database');
-    require('./redis');
+    require('./server/database');
+
     
     // GRAPHQL SERVER
-    await app.register(mercurius, {
-        schema:graphql_server(),
-        graphiql:'graphiql',
-        ide:'graphiql',
-        path:'/',
-    });
-    // app.setDefaultRoute(graphql_server());
-    // app.setNotFoundHandler(graphql_server());
+    app.register(graphql_server);
 
     // SERVER
     const PORT:number = typeof process.env.PORT == 'number' ? process.env.PORT : Number(process.env.PORT) ? Number(process.env.PORT) : 4560;
