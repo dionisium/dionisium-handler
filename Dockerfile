@@ -9,9 +9,9 @@ ENV HOST 0.0.0.0
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm install --production
+RUN npm build --production
 
-COPY ./ ./
+COPY ./
 
 # Paso de ejecución
 EXPOSE 3000
