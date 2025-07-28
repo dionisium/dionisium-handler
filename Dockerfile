@@ -11,7 +11,7 @@ COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm run build --production
 
-COPY ./
+COPY ./ ./
 
 # Paso de ejecución
 EXPOSE 3000
