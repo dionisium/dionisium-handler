@@ -9,7 +9,7 @@ ENV HOST 0.0.0.0
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm build --production
+RUN npm run build --production
 
 COPY ./
 
