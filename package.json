@@ -5,8 +5,8 @@
   "main": "app.ts",
   "directories": {},
   "scripts": {
-    "start": "node index.js",
-    "build": "npm install typescript"
+    "start": "node app.js",
+    "build": "npm install && npm install typescript"
   },
   "keywords": [],
   "author": "",
